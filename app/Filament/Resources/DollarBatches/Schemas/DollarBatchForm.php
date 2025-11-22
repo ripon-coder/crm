@@ -16,10 +16,22 @@ class DollarBatchForm
                 \Filament\Forms\Components\TextInput::make('dollar_amount')
                     ->required()
                     ->numeric()
-                    ->disabled(fn ($record) => $record && $record->dollarSales()->exists()), // Prevent edit if sales exist
+                    ->disabled(fn (?string $operation, $record) => $operation === 'edit' && $record?->dollarSales()->exists())
+                    ->dehydrated()
+                    ->helperText(fn ($record) => $record?->dollarSales()->exists() 
+                        ? '⚠️ Cannot edit: This batch has existing sales' 
+                        : null),
                 \Filament\Forms\Components\TextInput::make('rate')
                     ->required()
-                    ->numeric(),
+                    ->numeric()
+                    ->disabled(fn (?string $operation, $record) => $operation === 'edit' && $record?->dollarSales()->exists())
+                    ->dehydrated()
+                    ->helperText(fn ($record) => $record?->dollarSales()->exists() 
+                        ? '⚠️ Cannot edit: This batch has existing sales' 
+                        : null),
+                \Filament\Forms\Components\Toggle::make('is_active')
+                    ->label('Is Active')
+                    ->default(true),
                 \Filament\Forms\Components\Textarea::make('notes')
                     ->maxLength(65535)
                     ->columnSpanFull(),

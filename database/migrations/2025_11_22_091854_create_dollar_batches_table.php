@@ -19,6 +19,7 @@ return new class extends Migration
             $table->decimal('rate', 10, 2);
             $table->decimal('total_cost', 15, 2);
             $table->text('notes')->nullable();
+            $table->boolean('is_active')->default(true);
             $table->timestamps();
         });
     }

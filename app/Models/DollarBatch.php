@@ -29,6 +29,6 @@ class DollarBatch extends Model
 
     public function dollarSales()
     {
-        return $this->hasMany(DollarSale::class);
+        return $this->hasMany(DollarSale::class, 'batch_id');
     }
 }

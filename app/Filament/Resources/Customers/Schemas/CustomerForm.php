@@ -6,6 +6,7 @@ use Filament\Schemas\Schema;
 
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Toggle;
 
 class CustomerForm
 {
@@ -26,6 +27,9 @@ class CustomerForm
                     ->columnSpanFull(),
                 TextInput::make('national_id')
                     ->maxLength(255),
+                Toggle::make('is_active')
+                    ->label('Is Active')
+                    ->default(true),
                 Textarea::make('notes')
                     ->maxLength(65535)
                     ->columnSpanFull(),

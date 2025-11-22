@@ -11,7 +11,18 @@ class DollarSaleForm
         return $schema
             ->components([
                 \Filament\Forms\Components\Select::make('batch_id')
-                    ->relationship('batch', 'id')
+                    ->relationship(
+                        name: 'batch',
+                        titleAttribute: 'id',
+                        modifyQueryUsing: fn ($query) => $query
+                            ->where('is_active', true)
+                            ->where('remaining_amount', '>', 0)
+                            ->with('vendor')
+                    )
+                    ->getOptionLabelFromRecordUsing(fn ($record) => 
+                        "{$record->vendor->name} - Rate: ৳{$record->rate} - Remaining: \${$record->remaining_amount}"
+                    )
+                    ->preload()
                     ->required()
                     ->live()
                     ->afterStateUpdated(function ($state, callable $set, callable $get) {
@@ -27,7 +38,12 @@ class DollarSaleForm
                         }
                     }),
                 \Filament\Forms\Components\Select::make('customer_id')
-                    ->relationship('customer', 'name')
+                    ->relationship(
+                        name: 'customer',
+                        titleAttribute: 'name',
+                        modifyQueryUsing: fn ($query) => $query->where('is_active', true)
+                    )
+                    ->preload()
                     ->required(),
                 \Filament\Forms\Components\TextInput::make('amount')
                     ->required()

@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('account_no')->nullable();
             $table->decimal('default_rate', 10, 2)->nullable();
             $table->text('notes')->nullable();
+            $table->boolean('is_active')->default(true);
             $table->timestamps();
         });
     }

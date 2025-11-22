@@ -15,7 +15,6 @@ return new class extends Migration
             $table->id();
             $table->foreignId('batch_id')->constrained('dollar_batches')->cascadeOnDelete();
             $table->foreignId('customer_id')->constrained()->cascadeOnDelete();
-            $table->foreignId('user_id')->constrained()->cascadeOnDelete();
             $table->foreignId('invoice_id')->nullable()->constrained()->nullOnDelete();
             $table->decimal('amount', 15, 2);
             $table->decimal('rate', 10, 2);

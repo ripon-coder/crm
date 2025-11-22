@@ -11,11 +11,6 @@ class DollarSale extends Model
     protected static function booted()
     {
         static::creating(function ($sale) {
-            // Auto assign user
-            if (!$sale->user_id) {
-                $sale->user_id = auth()->id() ?? 1; // Fallback to 1 if no auth (e.g. seeder)
-            }
-
             // Calculate total price
             $sale->total_price = $sale->amount * $sale->rate;
 
@@ -54,10 +49,7 @@ class DollarSale extends Model
         return $this->belongsTo(Customer::class);
     }
 
-    public function user()
-    {
-        return $this->belongsTo(User::class);
-    }
+
 
     public function invoice()
     {

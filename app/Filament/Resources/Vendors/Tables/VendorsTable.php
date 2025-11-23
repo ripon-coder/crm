@@ -42,11 +42,11 @@ class VendorsTable
             ])
             ->actions([
                 EditAction::make(),
-                DeleteAction::make(),
+                //DeleteAction::make(),
             ])
             ->bulkActions([
                 BulkActionGroup::make([
-                    DeleteBulkAction::make(),
+                   // DeleteBulkAction::make(),
                 ]),
             ]);
     }

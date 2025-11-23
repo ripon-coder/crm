@@ -106,9 +106,9 @@ class DollarSaleForm
                         }),
                 ])
                 ->columns(2),
-
-            Section::make('Calculated Values')
-                ->schema([
+ 
+             Section::make('Calculated Values')
+                 ->schema([
                     TextInput::make('total_price')
                         ->label('Total Price')
                         ->numeric()

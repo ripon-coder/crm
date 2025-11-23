@@ -13,7 +13,9 @@ class EditDollarSale extends EditRecord
     protected function getHeaderActions(): array
     {
         return [
-            DeleteAction::make(),
+            DeleteAction::make()
+                ->disabled(fn () => $this->record->payments()->exists())
+                ->tooltip(fn () => $this->record->payments()->exists() ? 'Cannot delete sale with existing payments' : null),
         ];
     }
 }

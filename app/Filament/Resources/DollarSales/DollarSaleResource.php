@@ -13,12 +13,15 @@ use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
+use UnitEnum;
 
 class DollarSaleResource extends Resource
 {
     protected static ?string $model = DollarSale::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedCurrencyDollar;
+    protected static UnitEnum|string|null $navigationGroup = 'Dollar-Sales';
+    protected static ?int $navigationSort = 1;
 
     protected static ?string $recordTitleAttribute = 'id';
 
@@ -35,7 +38,7 @@ class DollarSaleResource extends Resource
     public static function getRelations(): array
     {
         return [
-            //
+            RelationManagers\PaymentsRelationManager::class,
         ];
     }
 

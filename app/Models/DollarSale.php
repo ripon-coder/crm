@@ -28,6 +28,8 @@ class DollarSale extends Model
                 $sale->profit = null;
             }
         });
+        
+        // Payment creation moved to CreateDollarSale page to handle form data
 
         static::updating(function ($sale) {
              // Recalculate if amount/rate changes (Complex logic needed for stock adjustment if amount changes)
@@ -36,6 +38,12 @@ class DollarSale extends Model
              if ($sale->isDirty(['amount', 'rate'])) {
                  $sale->total_price = $sale->amount * $sale->rate;
              }
+        });
+
+        static::deleting(function ($sale) {
+            if ($sale->payments()->exists()) {
+                throw new \Exception('Cannot delete sale with existing payments.');
+            }
         });
     }
 
@@ -49,10 +57,13 @@ class DollarSale extends Model
         return $this->belongsTo(Customer::class);
     }
 
-
-
     public function invoice()
     {
         return $this->belongsTo(Invoice::class);
+    }
+
+    public function payments()
+    {
+        return $this->morphMany(Payment::class, 'payable');
     }
 }

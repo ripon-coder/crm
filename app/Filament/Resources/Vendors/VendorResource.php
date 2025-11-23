@@ -15,12 +15,16 @@ use Filament\Support\Icons\Heroicon;
 use Filament\Actions;
 use Filament\Tables;
 use Filament\Tables\Table;
+use UnitEnum;
+
 
 class VendorResource extends Resource
 {
     protected static ?string $model = Vendor::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedUserGroup;
+    protected static UnitEnum|string|null $navigationGroup = 'Dollar-Sales';
+    protected static ?int $navigationSort = 3;
 
     protected static ?string $recordTitleAttribute = 'name';
 

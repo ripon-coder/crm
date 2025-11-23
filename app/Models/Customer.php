@@ -20,6 +20,11 @@ class Customer extends Model
     {
         return $this->hasMany(Invoice::class);
     }
+
+    public function dollarRequests()
+    {
+        return $this->hasMany(DollarRequest::class);
+    }
     protected $fillable = [
         'name',
         'phone',

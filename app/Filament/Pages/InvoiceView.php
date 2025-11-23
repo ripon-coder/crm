@@ -11,16 +11,6 @@ class InvoiceView extends Page
     protected string $view = 'filament.pages.invoice-view';
     protected static bool $shouldRegisterNavigation = false;
 
-
-    public function downloadInvoice()
-    {
-        $pdf = Pdf::loadView('filament.pages.invoice-view', ['record' => $this->record]);
-        return response()->streamDownload(
-            fn() => print($pdf->output()),
-            "invoice-{$this->record->id}.pdf"
-        );
-    }
-    
     public ?DollarSale $record = null;
     
     public function mount(): void

@@ -1,13 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\HomeController;
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
-Route::get('/admin/invoice', function () {
-    return "test";
-})->name('invoice')->middleware('auth.admin');
-
+Route::get('/request-form', [HomeController::class, 'index']);
 

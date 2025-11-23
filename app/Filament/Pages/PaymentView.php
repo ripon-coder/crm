@@ -24,6 +24,7 @@ class PaymentView extends Page implements HasForms, HasTable
     use InteractsWithTable;
 
     protected string $view = 'filament.pages.payment-view';
+    protected static ?string $title = 'Payments Create';
     protected static bool $shouldRegisterNavigation = false;
 
     public ?DollarSale $record = null;

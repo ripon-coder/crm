@@ -1,8 +1,5 @@
 @extends('layouts.app')
-
 @section('title', 'Welcome')
-@section('header', 'Welcome Page')
-
 @section('content')
 
 <div class="max-w-lg mx-auto bg-white p-6 rounded-lg shadow">
@@ -16,7 +13,7 @@
                placeholder="Enter email">
 
         {{-- Right Side: Search Button --}}
-        <button class="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-6 rounded">
+        <button type="submit" class="bg-indigo-600 hover:bg-indigo-700 text-white font-semibold px-6 py-2 rounded">
             Search
         </button>
 

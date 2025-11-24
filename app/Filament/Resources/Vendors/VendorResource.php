@@ -22,7 +22,7 @@ class VendorResource extends Resource
 {
     protected static ?string $model = Vendor::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedUserGroup;
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::BuildingStorefront;
     protected static UnitEnum|string|null $navigationGroup = 'Dollar-Sales';
     protected static ?int $navigationSort = 3;
 

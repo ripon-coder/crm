@@ -19,7 +19,7 @@ class DollarBatchResource extends Resource
 {
     protected static ?string $model = DollarBatch::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedArrowRightEndOnRectangle;
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::ArchiveBox;
     protected static UnitEnum|string|null $navigationGroup = 'Dollar-Sales';
     protected static ?int $navigationSort = 2;
 

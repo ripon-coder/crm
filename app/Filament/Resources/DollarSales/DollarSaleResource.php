@@ -19,7 +19,7 @@ class DollarSaleResource extends Resource
 {
     protected static ?string $model = DollarSale::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedCurrencyDollar;
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::CurrencyDollar;
     protected static UnitEnum|string|null $navigationGroup = 'Dollar-Sales';
     protected static ?int $navigationSort = 1;
 

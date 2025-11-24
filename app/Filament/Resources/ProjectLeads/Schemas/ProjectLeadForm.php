@@ -21,7 +21,6 @@ class ProjectLeadForm
                     Select::make('customer_id')
                         ->label('Customer')
                         ->relationship('customer', 'name')
-                        ->searchable()
                         ->required(),
                     TextInput::make('title')
                         ->label('Title')
@@ -43,7 +42,7 @@ class ProjectLeadForm
                     TextInput::make('budget')
                         ->label('Budget')
                         ->numeric()
-                        ->suffix('USD'),
+                        ->suffix('৳'),
                     DatePicker::make('start_date')
                         ->label('Start Date'),
                     DatePicker::make('end_date')

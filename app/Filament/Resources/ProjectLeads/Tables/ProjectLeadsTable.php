@@ -32,7 +32,26 @@ class ProjectLeadsTable
                         'completed' => 'success',
                         'cancelled' => 'danger',
                     ]),
-                TextColumn::make('budget')->numeric()->prefix('$')->sortable(),
+                TextColumn::make('budget')->numeric()->prefix('৳')->sortable(),
+                TextColumn::make('due')
+                    ->label('Due')
+                    ->numeric()
+                    ->prefix('৳')
+                    ->state(fn (ProjectLead $record) => $record->budget - $record->payments()->sum('amount')),
+                TextColumn::make('payment_status')
+                    ->label('Payment Status')
+                    ->badge()
+                    ->state(function (ProjectLead $record) {
+                        $paid = $record->payments()->sum('amount');
+                        if ($paid >= $record->budget) return 'Fully Paid';
+                        if ($paid > 0) return 'Partial';
+                        return 'Not Paid';
+                    })
+                    ->color(fn (string $state): string => match ($state) {
+                        'Fully Paid' => 'success',
+                        'Partial' => 'warning',
+                        'Not Paid' => 'danger',
+                    }),
                 TextColumn::make('start_date')->date()->sortable(),
                 TextColumn::make('end_date')->date()->sortable(),
                 BooleanColumn::make('is_active')->label('Active')->sortable(),
@@ -54,6 +73,17 @@ class ProjectLeadsTable
                     ->native(false),
             ])
             ->recordActions([
+                Action::make('Invoice')
+                    ->label('Invoice')
+                    ->icon('heroicon-o-document-text')
+                    ->url(fn (ProjectLead $record): string => route('filament.admin.pages.project-lead-invoice-view', ['record' => $record->id])),
+
+                Action::make('Payments')
+                    ->label('Payments')
+                    ->icon('heroicon-o-wallet')
+                    ->url(fn (ProjectLead $record): string => route('filament.admin.pages.project-lead-payment-view', ['record' => $record->id]))
+                    ->openUrlInNewTab(),
+
                 EditAction::make(),
                 DeleteAction::make()
                     ->disabled(fn (ProjectLead $record) => $record->payments()->exists())

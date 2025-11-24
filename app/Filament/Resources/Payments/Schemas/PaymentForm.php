@@ -32,6 +32,7 @@ class PaymentForm
                     TextInput::make('amount')
                         ->label('Amount')
                         ->numeric()
+                        ->suffix('৳')
                         ->required(),
                     TextInput::make('payment_method')
                         ->label('Payment Method')

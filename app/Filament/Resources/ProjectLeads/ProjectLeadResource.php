@@ -19,7 +19,8 @@ class ProjectLeadResource extends Resource
 {
     protected static ?string $model = ProjectLead::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::Users;
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::Briefcase;
+    protected static UnitEnum|string|null $navigationGroup = 'Project Leads';
 
     protected static ?string $recordTitleAttribute = 'title';
 

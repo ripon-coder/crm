@@ -12,7 +12,10 @@ class DollarBatchesTable
     public static function configure(Table $table): Table
     {
         return $table
+            ->defaultSort('id', 'desc')
             ->columns([
+                \Filament\Tables\Columns\TextColumn::make('id')
+                    ->sortable(),
                 \Filament\Tables\Columns\TextColumn::make('vendor.name')
                     ->searchable()
                     ->sortable(),

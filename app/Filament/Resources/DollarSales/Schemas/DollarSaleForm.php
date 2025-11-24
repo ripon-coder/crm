@@ -61,6 +61,19 @@ class DollarSaleForm
                         ->numeric()
                         ->prefix('$')
                         ->live(onBlur: true)
+                        ->rules([
+                            function (callable $get) {
+                                return function (string $attribute, $value, \Closure $fail) use ($get) {
+                                    $batchId = $get('batch_id');
+                                    if ($batchId && $value) {
+                                        $batch = \App\Models\DollarBatch::find($batchId);
+                                        if ($batch && $batch->remaining_amount < $value) {
+                                            $fail("⚠️ Insufficient stock in batch! Available: \${$batch->remaining_amount}, Requested: \${$value}");
+                                        }
+                                    }
+                                };
+                            }
+                        ])
                         ->afterStateUpdated(function ($state, callable $set, callable $get) {
                             $rate = $get('rate');
                             if ($state && $rate) {

@@ -14,7 +14,10 @@ class DollarSalesTable
     public static function configure(Table $table): Table
     {
         return $table
+            ->defaultSort('id', 'desc')
             ->columns([
+                \Filament\Tables\Columns\TextColumn::make('id')
+                    ->sortable(),
                 \Filament\Tables\Columns\TextColumn::make('batch_info')
                     ->label('Batch')
                     ->state(fn (DollarSale $record) => $record->batch->vendor->name . ' - ৳' . $record->batch->rate)

@@ -57,4 +57,9 @@ class DollarSalesTable extends Widget
             ->pluck('year', 'year')
             ->toArray();
     }
+
+    public function getColumnSpan(): int | string | array
+    {
+        return 'full';
+    }
 }

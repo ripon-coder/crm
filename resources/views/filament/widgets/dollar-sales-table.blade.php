@@ -1,7 +1,7 @@
-<x-filament-widgets::widget>
+<x-filament-widgets::widget class="col-span-full" style="grid-column: 1 / -1 !important;">
     <x-filament::section>
         {{-- Filters --}}
-        <div class="mb-6 grid grid-cols-1 gap-4 sm:grid-cols-2">
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 1.5rem;">
             <x-filament::input.wrapper>
                 <x-filament::input.select wire:model.live="selectedYear">
                     <option value="all">All Years</option>
@@ -31,50 +31,50 @@
         </div>
 
         {{-- Table --}}
-        <div class="overflow-hidden rounded-lg border border-gray-200 dark:border-gray-700">
-            <div class="overflow-x-auto">
-                <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
-                    <thead class="bg-gray-50 dark:bg-gray-800">
-                        <tr>
-                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-700 dark:text-gray-300">
+        <div style="margin-top: 1.5rem; overflow: hidden; border-radius: 0.75rem; background-color: white; box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1); border: 1px solid rgb(229 231 235);">
+            <div style="overflow-x: auto;">
+                <table style="width: 100%; table-layout: fixed; border-collapse: collapse;">
+                    <thead>
+                        <tr style="background-color: rgb(249 250 251);">
+                            <th style="width: 15% !important; min-width: 15%; padding: 0.875rem 1.5rem; text-align: left; font-size: 0.875rem; font-weight: 600; color: rgb(17 24 39);">
                                 Year
                             </th>
-                            <th scope="col" class="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-700 dark:text-gray-300">
+                            <th style="width: 20% !important; min-width: 20%; padding: 0.875rem 1.5rem; text-align: left; font-size: 0.875rem; font-weight: 600; color: rgb(17 24 39);">
                                 Month
                             </th>
-                            <th scope="col" class="px-6 py-3 text-center text-xs font-medium uppercase tracking-wider text-gray-700 dark:text-gray-300">
+                            <th style="width: 15% !important; min-width: 15%; padding: 0.875rem 1.5rem; text-align: center; font-size: 0.875rem; font-weight: 600; color: rgb(17 24 39);">
                                 Sales
                             </th>
-                            <th scope="col" class="px-6 py-3 text-right text-xs font-medium uppercase tracking-wider text-gray-700 dark:text-gray-300">
+                            <th style="width: 25% !important; min-width: 25%; padding: 0.875rem 1.5rem; text-align: right; font-size: 0.875rem; font-weight: 600; color: rgb(17 24 39);">
                                 Dollar Sold
                             </th>
-                            <th scope="col" class="px-6 py-3 text-right text-xs font-medium uppercase tracking-wider text-gray-700 dark:text-gray-300">
+                            <th style="width: 25% !important; min-width: 25%; padding: 0.875rem 1.5rem; text-align: right; font-size: 0.875rem; font-weight: 600; color: rgb(17 24 39);">
                                 Profit
                             </th>
                         </tr>
                     </thead>
-                    <tbody class="divide-y divide-gray-200 bg-white dark:divide-gray-700 dark:bg-gray-900">
+                    <tbody>
                         @forelse($this->getData() as $row)
-                            <tr class="hover:bg-gray-50 dark:hover:bg-gray-800/50">
-                                <td class="whitespace-nowrap px-6 py-4 text-sm font-medium text-gray-900 dark:text-gray-100">
+                            <tr style="border-top: 1px solid rgb(229 231 235); transition: background-color 0.15s;" onmouseover="this.style.backgroundColor='rgb(249 250 251)'" onmouseout="this.style.backgroundColor='white'">
+                                <td style="padding: 1rem 1.5rem; font-size: 0.875rem; color: rgb(17 24 39);">
                                     {{ $row->year }}
                                 </td>
-                                <td class="whitespace-nowrap px-6 py-4 text-sm text-gray-700 dark:text-gray-300">
+                                <td style="padding: 1rem 1.5rem; font-size: 0.875rem; color: rgb(17 24 39);">
                                     {{ DateTime::createFromFormat('!m', $row->month)->format('F') }}
                                 </td>
-                                <td class="whitespace-nowrap px-6 py-4 text-center text-sm font-semibold text-gray-900 dark:text-gray-100">
+                                <td style="padding: 1rem 1.5rem; text-align: center; font-size: 0.875rem; font-weight: 500; color: rgb(17 24 39);">
                                     {{ $row->total_sales }}
                                 </td>
-                                <td class="whitespace-nowrap px-6 py-4 text-right text-sm text-gray-900 dark:text-gray-100">
+                                <td style="padding: 1rem 1.5rem; text-align: right; font-size: 0.875rem; color: rgb(17 24 39);">
                                     ${{ number_format($row->total_amount, 2) }}
                                 </td>
-                                <td class="whitespace-nowrap px-6 py-4 text-right text-sm font-bold text-green-600 dark:text-green-400">
+                                <td style="padding: 1rem 1.5rem; text-align: right; font-size: 0.875rem; font-weight: 600; color: rgb(22 163 74);">
                                     ৳{{ number_format($row->total_profit, 2) }}
                                 </td>
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="5" class="px-6 py-12 text-center text-sm text-gray-500 dark:text-gray-400">
+                                <td colspan="5" style="padding: 3rem 1.5rem; text-align: center; font-size: 0.875rem; color: rgb(107 114 128);">
                                     No sales data found. Try adjusting your filters.
                                 </td>
                             </tr>

@@ -12,7 +12,7 @@ class DollarStats extends BaseWidget
     protected function getStats(): array
     {
         return [
-            Stat::make('Total Dollar Sales', DollarSale::count())
+            Stat::make('Total Dollar Sales', DollarSale::has('payments')->count())
                 ->description('Total number of dollar sales')
                 ->descriptionIcon('heroicon-m-shopping-cart')
                 ->color('warning'),

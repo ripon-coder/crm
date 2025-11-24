@@ -25,6 +25,12 @@ class Customer extends Model
     {
         return $this->hasMany(DollarRequest::class);
     }
+
+    public function projectLeads()
+    {
+        return $this->hasMany(ProjectLead::class);
+    }
+
     protected $fillable = [
         'name',
         'phone',
@@ -32,5 +38,6 @@ class Customer extends Model
         'address',
         'national_id',
         'notes',
+        'is_active',
     ];
 }

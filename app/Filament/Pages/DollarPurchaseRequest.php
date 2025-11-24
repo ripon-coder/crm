@@ -8,8 +8,6 @@ use Filament\Tables\Table;
 use Filament\Tables\Contracts\HasTable;
 use Filament\Tables\Concerns\InteractsWithTable;
 use Filament\Tables\Columns\TextColumn;
-use Filament\Tables\Columns\BadgeColumn;
-use Filament\Support\Icons\Heroicon;
 use UnitEnum;
 use BackedEnum;
 
@@ -23,7 +21,7 @@ class DollarPurchaseRequest extends Page implements HasTable, HasInfolists
     use InteractsWithTable;
     use InteractsWithInfolists;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedViewfinderCircle;
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-viewfinder-circle';
     protected static UnitEnum|string|null $navigationGroup = 'Dollar-Sales';
     protected string $view = 'filament.pages.dollar-purchase-request';
     
@@ -81,14 +79,16 @@ class DollarPurchaseRequest extends Page implements HasTable, HasInfolists
                     ->badge()
                     ->formatStateUsing(fn (string $state): string => ucfirst(str_replace('_', ' ', $state))),
                     
-                BadgeColumn::make('status')
+                TextColumn::make('status')
                     ->label('Status')
                     ->sortable()
-                    ->colors([
-                        'warning' => 'pending',
-                        'success' => 'approved',
-                        'danger' => 'rejected',
-                    ]),
+                    ->badge()
+                    ->color(fn (string $state): string => match ($state) {
+                        'pending' => 'warning',
+                        'approved' => 'success',
+                        'rejected' => 'danger',
+                        default => 'gray',
+                    }),
                     
                 TextColumn::make('created_at')
                     ->label('Submitted')

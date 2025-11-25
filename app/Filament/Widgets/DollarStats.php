@@ -10,6 +10,8 @@ use Filament\Widgets\StatsOverviewWidget\Stat;
 
 class DollarStats extends BaseWidget
 {
+    protected ?string $pollingInterval = null;
+
     protected function getStats(): array
     {
         return [

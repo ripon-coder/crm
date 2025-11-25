@@ -2,7 +2,7 @@
 @section('title', 'Welcome')
 @section('content')
 
-<div class="max-w-4xl mx-auto space-y-4 sm:space-y-8 sm:px-0">
+<div class="max-w-4xl mx-auto space-y-4 sm:space-y-8 px-4 py-8 sm:px-0">
 
     {{-- Professional Header --}}
     <div class="text-center mb-4 sm:mb-8">
@@ -12,8 +12,8 @@
         <p class="text-sm sm:text-base text-gray-600 dark:text-gray-400">Complete the form below to submit your dollar purchase request</p>
     </div>
 
-    {{-- Step 1: Email Search --}}
-    @if(!isset($customer) && !isset($email))
+    {{-- Step 1: Email or Phone Search --}}
+    @if(!isset($customer) && !isset($email) && !isset($phone))
     <div class="bg-white dark:bg-gray-800 rounded-lg sm:rounded-xl shadow-lg p-3 sm:p-8 border border-gray-100 dark:border-gray-700">
         <div class="flex items-center mb-4 sm:mb-6">
             <div class="bg-indigo-100 dark:bg-indigo-900 rounded-full p-2 sm:p-3 mr-3 sm:mr-4">
@@ -21,14 +21,14 @@
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
                 </svg>
             </div>
-            <h2 class="text-base sm:text-xl font-semibold text-gray-900 dark:text-white">Search by Email</h2>
+            <h2 class="text-base sm:text-xl font-semibold text-gray-900 dark:text-white">Search by Email or Phone</h2>
         </div>
         <form action="{{ url('/search-customer') }}" method="GET" class="flex flex-col sm:flex-row gap-3 sm:gap-4">
-            <input type="email"
-                   name="email"
+            <input type="text"
+                   name="search_value"
                    required
                    class="flex-1 border-2 border-gray-200 dark:border-gray-600 rounded-lg px-4 py-2.5 sm:px-5 sm:py-3 text-sm sm:text-base focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all"
-                   placeholder="Enter your email address">
+                   placeholder="Enter your email or phone number">
             <button type="submit" class="bg-gradient-to-r from-indigo-600 to-indigo-700 hover:from-indigo-700 hover:to-indigo-800 text-white font-semibold px-6 py-2.5 sm:px-8 sm:py-3 text-sm sm:text-base rounded-lg shadow-md hover:shadow-lg transition-all">
                 Search
             </button>
@@ -37,7 +37,7 @@
     @endif
 
     {{-- Step 2: Customer Form + Dollar Purchase --}}
-    @if(isset($email))
+    @if(isset($email) || isset($phone))
     <form action="{{ url('/submit-request') }}" method="POST" enctype="multipart/form-data" class="space-y-4 sm:space-y-6">
         @csrf
 
@@ -61,8 +61,8 @@
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
                     <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">Email</label>
-                    <input type="email" name="email" value="{{ $email }}" readonly
-                           class="w-full border-2 border-gray-200 dark:border-gray-600 rounded-lg px-4 py-3 bg-gray-50 dark:bg-gray-700 text-gray-500">
+                    <input type="email" name="email" value="{{ $email ?? $customer->email ?? '' }}" {{ ($customer || isset($email)) ? 'readonly' : 'required' }}
+                           class="w-full border-2 border-gray-200 dark:border-gray-600 rounded-lg px-4 py-3 {{ ($customer || isset($email)) ? 'bg-gray-50 dark:bg-gray-700 text-gray-500' : '' }}">
                 </div>
 
                 <div>
@@ -73,10 +73,9 @@
                 </div>
 
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Phone *</label>
-                    <input type="text" name="phone" value="{{ $customer->phone ?? '' }}" required
-                           class="w-full border border-gray-300 rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-                           {{ $customer ? 'readonly' : '' }}>
+                    <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">Phone</label>
+                    <input type="text" name="phone" value="{{ $phone ?? $customer->phone ?? '' }}" {{ ($customer || isset($phone)) ? 'readonly' : 'required' }}
+                           class="w-full border-2 border-gray-200 dark:border-gray-600 rounded-lg px-4 py-3 {{ ($customer || isset($phone)) ? 'bg-gray-50 dark:bg-gray-700 text-gray-500' : '' }}">
                 </div>
 
                 <div>
@@ -156,12 +155,11 @@
                 </div>
 
                 <div>
-                    <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">Transaction Proof (Image) *</label>
+                    <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">Transaction Proof (Image)</label>
                     <input type="file" 
                            name="transaction_proof" 
                            id="transactionProof"
                            accept="image/*"
-                           required
                            onchange="previewImage(event)"
                            class="w-full border-2 border-gray-200 dark:border-gray-600 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100">
                     <p class="text-xs text-gray-500 dark:text-gray-400 mt-2">Upload payment screenshot or transaction proof (Max: 2MB)</p>

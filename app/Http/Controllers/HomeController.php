@@ -12,16 +12,34 @@ class HomeController extends Controller
         return view('front.form');
     }
 
+    public function home()
+    {
+        return view('front.home');
+    }
+
     public function searchCustomer(Request $request)
     {
-        $email = $request->input('email');
-        $customer = Customer::where('email', $email)->first();
+        $searchValue = $request->input('search_value');
         
-        return view('front.form', [
-            'customer' => $customer,
-            'email' => $email,
-            'dollarRate' => 130
-        ]);
+        // Automatically detect if it's an email or phone
+        // If it contains '@', treat it as email, otherwise as phone
+        if (strpos($searchValue, '@') !== false) {
+            // Search by email
+            $customer = Customer::where('email', $searchValue)->first();
+            return view('front.form', [
+                'customer' => $customer,
+                'email' => $searchValue,
+                'dollarRate' => 130
+            ]);
+        } else {
+            // Search by phone
+            $customer = Customer::where('phone', $searchValue)->first();
+            return view('front.form', [
+                'customer' => $customer,
+                'phone' => $searchValue,
+                'dollarRate' => 130
+            ]);
+        }
     }
 
     public function submitRequest(Request $request)
@@ -36,7 +54,7 @@ class HomeController extends Controller
             'transaction_id' => 'nullable|string|max:255',
             'bank_name' => 'nullable|string|max:255',
             'account_number' => 'nullable|string|max:255',
-            'transaction_proof' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'transaction_proof' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
         // Create or update customer
@@ -76,8 +94,15 @@ class HomeController extends Controller
             'status' => 'pending',
         ]);
 
+        return redirect()->signedRoute('request.success', ['id' => $dollarRequest->id]);
+    }
+
+    public function requestSuccess($id)
+    {
+        $dollarRequest = \App\Models\DollarRequest::with('customer')->findOrFail($id);
+        
         return view('front.success', [
-            'customer' => $customer,
+            'customer' => $dollarRequest->customer,
             'dollarRequest' => $dollarRequest,
         ]);
     }

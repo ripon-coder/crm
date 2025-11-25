@@ -94,7 +94,7 @@
         </div>
 
         <div class="flex gap-3">
-            <a href="{{ url('/request-form') }}" class="flex-1 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold px-6 py-3 rounded text-center">
+            <a href="{{ url('/dollar-request-form') }}" class="flex-1 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold px-6 py-3 rounded text-center">
                 Make Another Request
             </a>
         </div>

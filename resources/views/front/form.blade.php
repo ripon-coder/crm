@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'Welcome')
+@section('title', 'Dollar Purchase Request')
 @section('content')
 
 <div class="max-w-4xl mx-auto space-y-4 sm:space-y-8 px-4 py-8 sm:px-0">
@@ -60,28 +60,28 @@
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
-                    <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">Email</label>
+                    <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">Email *</label>
                     <input type="email" name="email" value="{{ $email ?? $customer->email ?? '' }}" {{ ($customer || isset($email)) ? 'readonly' : 'required' }}
                            class="w-full border-2 border-gray-200 dark:border-gray-600 rounded-lg px-4 py-3 {{ ($customer || isset($email)) ? 'bg-gray-50 dark:bg-gray-700 text-gray-500' : '' }}">
                 </div>
 
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Name *</label>
+                    <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">Name *</label>
                     <input type="text" name="name" value="{{ $customer->name ?? '' }}" required
-                           class="w-full border border-gray-300 rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                           class="w-full border-2 border-gray-200 dark:border-gray-600 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all {{ $customer ? 'bg-gray-50 dark:bg-gray-700 text-gray-500' : '' }}"
                            {{ $customer ? 'readonly' : '' }}>
                 </div>
 
                 <div>
-                    <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">Phone</label>
+                    <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">Phone *</label>
                     <input type="text" name="phone" value="{{ $phone ?? $customer->phone ?? '' }}" {{ ($customer || isset($phone)) ? 'readonly' : 'required' }}
                            class="w-full border-2 border-gray-200 dark:border-gray-600 rounded-lg px-4 py-3 {{ ($customer || isset($phone)) ? 'bg-gray-50 dark:bg-gray-700 text-gray-500' : '' }}">
                 </div>
 
                 <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-1">Address</label>
+                    <label class="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">Address</label>
                     <input type="text" name="address" value="{{ $customer->address ?? '' }}"
-                           class="w-full border border-gray-300 rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                           class="w-full border-2 border-gray-200 dark:border-gray-600 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all {{ $customer ? 'bg-gray-50 dark:bg-gray-700 text-gray-500' : '' }}"
                            {{ $customer ? 'readonly' : '' }}>
                 </div>
             </div>

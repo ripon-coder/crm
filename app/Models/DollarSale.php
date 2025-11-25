@@ -44,6 +44,12 @@ class DollarSale extends Model
             if ($sale->payments()->exists()) {
                 throw new \Exception('Cannot delete sale with existing payments.');
             }
+
+            // Restore stock to batch
+            $batch = $sale->batch;
+            if ($batch) {
+                $batch->increment('remaining_amount', $sale->amount);
+            }
         });
     }
 

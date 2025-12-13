@@ -24,6 +24,7 @@ class ProjectLeadsTable
             ->columns([
                 TextColumn::make('id')->sortable(),
                 TextColumn::make('customer.name')->label('Customer')->searchable()->sortable(),
+                TextColumn::make('service.name')->label('Service')->searchable()->sortable(),
                 TextColumn::make('title')->searchable()->sortable(),
                 BadgeColumn::make('status')
                     ->colors([

@@ -32,7 +32,25 @@ class GeneralStats extends BaseWidget
                 return $due > 0 ? $due : 0;
             });
 
+        // Calculate today's profit from fully paid sales
+        $todaysProfit = \DB::table('dollar_sales')
+            ->select('dollar_sales.profit', 'dollar_sales.total_price')
+            ->leftJoin('payments', function($join) {
+                $join->on('payments.payable_id', '=', 'dollar_sales.id')
+                     ->where('payments.payable_type', '=', 'App\\Models\\DollarSale');
+            })
+            ->whereDate('dollar_sales.created_at', now())
+            ->groupBy('dollar_sales.id', 'dollar_sales.profit', 'dollar_sales.total_price')
+            ->havingRaw('COALESCE(SUM(payments.amount), 0) >= dollar_sales.total_price')
+            ->get()
+            ->sum('profit');
+
         return [
+            Stat::make('Today\'s Profit', '৳' . number_format($todaysProfit, 2))
+                ->description('Total profit generated today (Fully Paid)')
+                ->descriptionIcon('heroicon-m-arrow-trending-up')
+                ->color('success'),
+
             Stat::make('Total Due (Dollar Sales)', '৳' . number_format($totalDueDollarSales, 2))
                 ->description('Outstanding payments for dollar sales')
                 ->descriptionIcon('heroicon-m-exclamation-triangle')

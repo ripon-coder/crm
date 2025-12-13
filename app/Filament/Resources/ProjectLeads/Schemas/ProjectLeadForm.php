@@ -22,6 +22,10 @@ class ProjectLeadForm
                         ->label('Customer')
                         ->relationship('customer', 'name')
                         ->required(),
+                    Select::make('service_id')
+                        ->label('Service')
+                        ->relationship('service', 'name')
+                        ->required(),
                     TextInput::make('title')
                         ->label('Title')
                         ->required()

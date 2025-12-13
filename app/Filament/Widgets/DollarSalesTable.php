@@ -18,8 +18,13 @@ class DollarSalesTable extends Widget
     public $selectedYear = null;
     public $selectedMonth = null;
     
+    public $dateFrom = null;
+    public $dateTo = null;
+
     public $appliedYear = null;
     public $appliedMonth = null;
+    public $appliedDateFrom = null;
+    public $appliedDateTo = null;
 
     public function mount(): void
     {
@@ -33,6 +38,21 @@ class DollarSalesTable extends Widget
     {
         $this->appliedYear = $this->selectedYear;
         $this->appliedMonth = $this->selectedMonth;
+        $this->appliedDateFrom = $this->dateFrom;
+        $this->appliedDateTo = $this->dateTo;
+    }
+
+    public function resetFilters(): void
+    {
+        $this->selectedYear = date('Y');
+        $this->selectedMonth = 'all';
+        $this->dateFrom = null;
+        $this->dateTo = null;
+        
+        $this->appliedYear = date('Y');
+        $this->appliedMonth = 'all';
+        $this->appliedDateFrom = null;
+        $this->appliedDateTo = null;
     }
 
     public function getData(): array
@@ -55,14 +75,24 @@ class DollarSalesTable extends Widget
             })
             ->groupBy('dollar_sales.id', 'dollar_sales.created_at', 'dollar_sales.profit', 'dollar_sales.amount', 'dollar_sales.total_price');
 
-        // Apply year filter if set
-        if ($this->appliedYear !== 'all') {
-            $salesWithPaymentInfo->whereYear('dollar_sales.created_at', $this->appliedYear);
-        }
+        // Apply date range filter if set (takes precedence)
+        if ($this->appliedDateFrom || $this->appliedDateTo) {
+            if ($this->appliedDateFrom) {
+                $salesWithPaymentInfo->whereDate('dollar_sales.created_at', '>=', $this->appliedDateFrom);
+            }
+            if ($this->appliedDateTo) {
+                $salesWithPaymentInfo->whereDate('dollar_sales.created_at', '<=', $this->appliedDateTo);
+            }
+        } else {
+            // Apply year filter if set
+            if ($this->appliedYear !== 'all') {
+                $salesWithPaymentInfo->whereYear('dollar_sales.created_at', $this->appliedYear);
+            }
 
-        // Apply month filter if set
-        if ($this->appliedMonth !== 'all') {
-            $salesWithPaymentInfo->whereMonth('dollar_sales.created_at', $this->appliedMonth);
+            // Apply month filter if set
+            if ($this->appliedMonth !== 'all') {
+                $salesWithPaymentInfo->whereMonth('dollar_sales.created_at', $this->appliedMonth);
+            }
         }
 
         // Get the sales data

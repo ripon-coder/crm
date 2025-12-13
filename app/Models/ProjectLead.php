@@ -20,6 +20,7 @@ class ProjectLead extends Model
 
     protected $fillable = [
         'customer_id',
+        'service_id',
         'title',
         'description',
         'status',
@@ -36,6 +37,11 @@ class ProjectLead extends Model
     public function customer()
     {
         return $this->belongsTo(Customer::class);
+    }
+
+    public function service()
+    {
+        return $this->belongsTo(Service::class);
     }
 
     /**

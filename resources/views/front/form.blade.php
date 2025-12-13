@@ -177,7 +177,7 @@
                 <div class="bg-gradient-to-br from-indigo-50 to-purple-50 dark:from-indigo-900/20 dark:to-purple-900/20 p-6 rounded-xl border-2 border-indigo-200 dark:border-indigo-700 shadow-sm">
                     <div class="flex justify-between text-sm mb-2">
                         <span class="text-gray-600">Exchange Rate:</span>
-                        <span class="font-semibold">৳{{ $dollarRate ?? 130 }}</span>
+                        <span class="font-semibold">৳{{ (isset($customer) && $customer->dollar_rate) ? $customer->dollar_rate : 130 }}</span>
                     </div>
                     <div class="flex justify-between text-lg font-bold border-t pt-2">
                         <span>Total Cost:</span>
@@ -221,7 +221,7 @@
 
     function calculateTotal() {
         const dollarAmount = parseFloat(document.getElementById('dollarAmount').value) || 0;
-        const rate = {{ $dollarRate ?? 130 }};
+        const rate = {{ (isset($customer) && $customer->dollar_rate) ? $customer->dollar_rate : 130 }};
         const total = dollarAmount * rate;
         document.getElementById('totalCost').textContent = '৳' + total.toFixed(2);
     }

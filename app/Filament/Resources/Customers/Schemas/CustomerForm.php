@@ -36,6 +36,11 @@ class CustomerForm
                         ->label('National ID')
                         ->maxLength(255),
 
+                    TextInput::make('dollar_rate')
+                        ->label('Dollar Rate')
+                        ->numeric()
+                        ->step(0.01),
+
                     Toggle::make('is_active')
                         ->label('Is Active')
                         ->default(true),

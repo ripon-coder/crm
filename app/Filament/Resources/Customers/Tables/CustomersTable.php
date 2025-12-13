@@ -26,6 +26,10 @@ class CustomersTable
                     ->searchable(),
                 TextColumn::make('address')
                     ->searchable(),
+                TextColumn::make('dollar_rate')
+                    ->label('Dollar Rate')
+                    ->money('BDT')
+                    ->sortable(),
                 TextColumn::make('national_id')
                     ->searchable(),
                 TextColumn::make('created_at')

@@ -16,8 +16,9 @@ return new class extends Migration
             $table->string('name');
             $table->string('phone')->nullable()->unique();
             $table->string('email')->nullable()->unique();
-            $table->text('address')->nullable();
+            $table->float('dollar_rate',8,2)->nullable();
             $table->string('national_id')->nullable();
+            $table->text('address')->nullable();
             $table->text('notes')->nullable();
             $table->boolean('is_active')->default(true);
             $table->timestamps();

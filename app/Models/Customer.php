@@ -37,6 +37,7 @@ class Customer extends Model
         'email',
         'address',
         'national_id',
+        'dollar_rate',
         'notes',
         'is_active',
     ];

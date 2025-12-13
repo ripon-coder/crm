@@ -29,7 +29,7 @@ class HomeController extends Controller
             return view('front.form', [
                 'customer' => $customer,
                 'email' => $searchValue,
-                'dollarRate' => 130
+                'dollarRate' => $customer?->dollar_rate ?? 130
             ]);
         } else {
             // Search by phone
@@ -37,7 +37,7 @@ class HomeController extends Controller
             return view('front.form', [
                 'customer' => $customer,
                 'phone' => $searchValue,
-                'dollarRate' => 130
+                'dollarRate' => $customer?->dollar_rate ?? 130
             ]);
         }
     }
@@ -73,7 +73,7 @@ class HomeController extends Controller
             $imagePath = $request->file('transaction_proof')->store('transaction_proofs', 'public');
         }
 
-        $dollarRate = 130;
+        $dollarRate = $customer->dollar_rate ?? 130;
         $totalCost = $validated['dollar_amount'] * $dollarRate;
 
         // Create dollar request
